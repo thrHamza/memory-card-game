@@ -3,6 +3,7 @@ import "./assets/custom.css";
 
 import Card from "./components/Card";
 import History from "./components/History";
+import Settings from "./components/Settings";
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
     const [background, setBackground] = useState("#CEE8F2");
     const [isGameCompleted, setIsGameCompleted] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
-    const [view, setView] = useState("game"); // "game"|"history"
+    const [view, setView] = useState("game"); // "game"|"history"|"settings"
 
 
 
@@ -99,6 +100,8 @@ function App() {
             clearInterval(timer);
         }
 
+        setView("game");
+
         setCards(generateCards(gameMode));
         setMoves(0);
         setTime(0);
@@ -126,12 +129,28 @@ function App() {
 
             // History
             const history = JSON.parse(localStorage.getItem("gameHistory")) || [];
-            const newEntry = { moves, time, date: new Date().toLocaleString() };
+            const newEntry = { gameMode, moves, time, date: new Date().toLocaleString() };
             localStorage.setItem("gameHistory", JSON.stringify([...history, newEntry]));
 
             alert(`You won with ${moves} moves under ${time} seconds !`);
         }
-    }, [cards, timer, moves, time, isGameCompleted]);
+    }, [cards, timer, gameMode, moves, time, isGameCompleted]);
+
+    // Settings
+    useEffect(() => {
+        const settings = { gameMode, background };
+        localStorage.setItem("gameSettings", JSON.stringify(settings));
+    }, [gameMode, background]);
+
+    // New game mode
+    useEffect(() => {
+        setCards(generateCards(gameMode));
+        setMoves(0);
+        setTime(0);
+        clearInterval(timer);
+        setTimer(null);
+        setGameStarted(false);
+    }, [gameMode]);
 
     return (
         <div className="game" style={{ backgroundColor: background }}>
@@ -175,10 +194,21 @@ function App() {
                 <button onClick={() => setView("history")}>
                     History
                 </button>
+                <button onClick={() => setView("settings")}>
+                    Settings
+                </button>
             </div>
 
             {/* Views */}
-            {view === "history" && <History />}
+            {view === "history" && <History/>}
+            {view === "settings" && (
+                <Settings
+                    gameMode={gameMode}
+                    setGameMode={setGameMode}
+                    background={background}
+                    setBackground={setBackground}
+                />
+            )}
 
         </div>
     );

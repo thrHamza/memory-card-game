@@ -61,6 +61,30 @@
     display: block;
 }
 
+.settings input, select {
+    padding: 5px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    outline: none;
+    border: none;
+}
+.settings input[type="color"] {
+    width: 50%;
+    height: 30px;
+    padding: 0px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.settings select {
+    background-color: #FFF;
+    color: #000;
+}
+.settings select option {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
 .button-32 {
    background-color: #fff000;
    border-radius: 12px;
