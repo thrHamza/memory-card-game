@@ -12,11 +12,9 @@
     transition: background-color 0.3s ease, color 0.3s ease;
     user-select: none;
 }
-
 .card:hover {
     opacity: 0.9;
 }
-
 .card img {
     display: block;
     margin: auto;
@@ -30,6 +28,37 @@
     justify-Content: center;
     padding: 20px;
     color: #012626FF;
+}
+
+.history {
+    max-Width: 500px;
+    margin: 0 auto;
+    text-Align: left;
+}
+.history p {
+    text-align: center;
+}
+.history ul {
+    padding: 0;
+    list-Style-Type: none;
+}
+.history ul li {
+    background-Color: #012626FF;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-Radius: 5px;
+}
+.history .btn-clearHistory {
+    background-Color: #e53935;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin: 20px auto;
+    border-Radius: 5px;
+    cursor: pointer;
+    font-Size: 16px;
+    display: block;
 }
 
 .button-32 {
@@ -49,16 +78,33 @@
    -webkit-user-select: none;
    touch-action: manipulation;
 }
-
 .button-32:not(:disabled):hover,
 .button-32:not(:disabled):focus {
     outline: 0;
     background: #f4e603;
     box-shadow: 0 0 0 2px rgba(0,0,0,.2), 0 3px 8px 0 rgba(0,0,0,.15);
 }
-
 .button-32:disabled {
     filter: saturate(0.2) opacity(0.5);
     -webkit-filter: saturate(0.2) opacity(0.5);
     cursor: not-allowed;
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    display: flex;
+    justify-Content: center;
+    gap: 10px;
+}
+.footer button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.footer button:hover,
+.footer button:active{
+    border-bottom: 2px solid #000;
 }

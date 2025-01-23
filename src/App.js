@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./assets/custom.css";
+
 import Card from "./components/Card";
+import History from "./components/History";
+
 
 function App() {
     const [gameMode, setGameMode] = useState(4); // 4|16|32
@@ -12,6 +15,8 @@ function App() {
     const [background, setBackground] = useState("#CEE8F2");
     const [isGameCompleted, setIsGameCompleted] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
+    const [view, setView] = useState("game"); // "game"|"history"
+
 
 
     const generateCards = (mode) => {
@@ -89,7 +94,6 @@ function App() {
         setMoves((prev) => prev + 1);
     };
 
-
     const startNewGame = () => {
         if (timer) {
             clearInterval(timer);
@@ -120,21 +124,21 @@ function App() {
             setTimer(null);
             setIsGameCompleted(true);
 
+            // History
+            const history = JSON.parse(localStorage.getItem("gameHistory")) || [];
+            const newEntry = { moves, time, date: new Date().toLocaleString() };
+            localStorage.setItem("gameHistory", JSON.stringify([...history, newEntry]));
+
             alert(`You won with ${moves} moves under ${time} seconds !`);
         }
     }, [cards, timer, moves, time, isGameCompleted]);
 
     return (
-        <div
-            className="game"
-            style={{ backgroundColor: background }}
-        >
+        <div className="game" style={{ backgroundColor: background }}>
+
             {/* Header Section */}
             <div style={{ marginBottom: "20px", textAlign: "center" }}>
-                <button
-                    onClick={startNewGame}
-                    className="button-32"
-                >
+                <button onClick={startNewGame} className="button-32">
                     Start
                 </button>
                 <p>
@@ -143,6 +147,7 @@ function App() {
             </div>
 
             {/* Game Section */}
+            {view === "game" &&
                 <div
                     style={{
                         display: "grid",
@@ -160,6 +165,20 @@ function App() {
                         />
                     ))}
                 </div>
+            }
+
+            {/* Footer */}
+            <div className="footer">
+                <button onClick={() => setView("game")}>
+                    Game
+                </button>
+                <button onClick={() => setView("history")}>
+                    History
+                </button>
+            </div>
+
+            {/* Views */}
+            {view === "history" && <History />}
 
         </div>
     );
